@@ -48,28 +48,41 @@ app.get("/urls/new", (req, res) => {
 
 app.get("/urls/:id", (req, res) => {
   let shortURL = req.params.id;
-  let longURL = urlDatabase[shortURL]
-  let templateVars = { shortURL: shortURL, longURL: longURL};
-  res.render("urls_show", templateVars);
+  if (urlDatabase.hasOwnProperty(shortURL)) {
+    let longURL = urlDatabase[shortURL]
+    let templateVars = { shortURL: shortURL, longURL: longURL};
+    res.render("urls_show", templateVars);
+  } else {
+    res.status(404);
+    res.send("NOT FOUND");
+  }
 });
+// OTHERWISE GIVE ERROR MSG
+// REMEMBER TO HAVE STATUS CODE eg. 4XX
 
 app.post("/urls", (req, res) => {
   let longURL = req.body.longURL;  // debug statement to see POST parameters
-
   let newKey = generateRandomString();
   while (urlDatabase.hasOwnProperty(newKey)) {
     newKey = generateRandomString();
   }
   urlDatabase[newKey] = longURL;
 
-  res.send("Ok");         // Respond with 'Ok' (we will replace this)
+  res.redirect("/urls/" + newKey);         // Respond with 'Ok' (we will replace this)
 });
 
 app.get("/u/:shortURL", (req, res) => {
   let urlKey = req.params.shortURL;
-  let longURL = urlDatabase[urlKey];
-  res.redirect(longURL);
+  if(urlDatabase.hasOwnProperty(urlKey)) {
+    let longURL = urlDatabase[urlKey];
+    res.redirect(longURL);
+  } else {
+    res.status(404);
+    res.send('SHORT URL DOES NOT EXIST');
+  }
 });
+// OTHERWISE GIVE ERROR MSG
+// REMEMBER TO HAVE STATUS CODE eg. 4XX
 
 app.delete("/urls/:id", (req, res) => {
   let id = req.params.id;
@@ -87,7 +100,6 @@ app.put("/urls/:id", (req, res) => {
   res.redirect("/urls/");
 });
 
-//  /urls/b2xVn2?_method=DELETE
 
 // app.get("/urls.json", (req, res) => {
 //   res.json(urlDatabase);
