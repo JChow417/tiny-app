@@ -7,7 +7,7 @@ var methodOverride = require('method-override');
 
 function generateRandomString() {
   let numberOfChars = 6;
-  let alphanumericChar = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+  let alphanumericChar = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
   let resultArr = [];
   for(let i = 0; i < numberOfChars; i++) {
     let charIndex = Math.floor(Math.random() * alphanumericChar.length);
@@ -16,7 +16,6 @@ function generateRandomString() {
   }
   return resultArr.join("");
 }
-
 
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded());
@@ -34,11 +33,14 @@ var urlDatabase = {
 //   res.end("Hello!");
 // });
 
+app.get("/", (req, res) => {
+  res.redirect("urls/new");
+});
+
 app.get("/urls", (req, res) => {
   let templateVars = { urls: urlDatabase };
   res.render('urls_index', templateVars);
 });
-
 
 app.get("/urls/new", (req, res) => {
   res.render("urls_new");
@@ -52,7 +54,14 @@ app.get("/urls/:id", (req, res) => {
 });
 
 app.post("/urls", (req, res) => {
-  console.log(req.body);  // debug statement to see POST parameters
+  let longURL = req.body.longURL;  // debug statement to see POST parameters
+
+  let newKey = generateRandomString();
+  while (urlDatabase.hasOwnProperty(newKey)) {
+    newKey = generateRandomString();
+  }
+  urlDatabase[newKey] = longURL;
+
   res.send("Ok");         // Respond with 'Ok' (we will replace this)
 });
 
