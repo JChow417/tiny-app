@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+    <!-- Write EJS code here to display shortened links -->
+    <header>
+        <% include ./partials/_header %>
+    </header>
+    ShortURL: <%= shortURL %>
+    <ul>
+
+      <form action="/urls/<%= shortURL %>?_method=PUT" method="POST" style="margin:150px;">
+      <label for="newLongURL">Enter a URL:</label>
+      <input id="newLongURL" type="text" name="newLongURL" placeholder="<%= longURL %>" style="width: 300px">
+      <input type="submit" value="Update">
+    </form>
+
+
+    </ul>
+
+
+</body>
+</html>
