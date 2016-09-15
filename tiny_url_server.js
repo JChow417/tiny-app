@@ -54,7 +54,7 @@ app.get("/urls/:id", (req, res) => {
     res.render("urls_show", templateVars);
   } else {
     res.status(404);
-    res.send("NOT FOUND");
+    res.send("SHORT URL DOES NOT EXIST");
   }
 });
 // OTHERWISE GIVE ERROR MSG
@@ -78,7 +78,7 @@ app.get("/u/:shortURL", (req, res) => {
     res.redirect(longURL);
   } else {
     res.status(404);
-    res.send('SHORT URL DOES NOT EXIST');
+    res.send("SHORT URL DOES NOT EXIST");
   }
 });
 // OTHERWISE GIVE ERROR MSG
