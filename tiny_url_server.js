@@ -1,6 +1,7 @@
 "use strict";
+require('dotenv').config();
 const MongoClient = require("mongodb").MongoClient;
-const MONGODB_URI = "mongodb://127.0.0.1:27017/url_shortener";
+const MONGODB_URI = process.env.MONGODB_URI;
 
 MongoClient.connect(MONGODB_URI, (err, dbInstance) => {
   if (err) {
