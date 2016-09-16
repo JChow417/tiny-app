@@ -1,23 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-<body>
+<body style="font-size:20px; padding:50px;">
     <!-- Write EJS code here to display shortened links -->
     <header>
         <% include ./partials/_header %>
     </header>
-    ShortURL: <%= shortURL %>
-    <ul>
-
-      <form action="/urls/<%= shortURL %>?_method=PUT" method="POST" style="margin:150px;">
-      <label for="newLongURL">Enter a URL:</label>
+    <div>
+      <a href="/">New TinyURLs</a> <a href="/urls">URLs</a>
+    </div>
+    <br>
+    <div>
+      <a href="http://<%= hostName%>/u/<%= shortURL %>">http://<%= hostName%>/u/<%= shortURL %></a>
+    </div>
+    <br>
+    <div>
+      <form action="/urls/<%= shortURL %>?_method=PUT" method="POST" style="margin:0px;">
+      <label for="newLongURL">Update URL:</label>
       <input id="newLongURL" type="text" name="newLongURL" placeholder="<%= longURL %>" style="width: 300px">
       <input type="submit" value="Update">
     </form>
 
 
-    </ul>
-    <a href="/">create tinyURLs</a>
-    <a href="/urls">URLs</a>
+    </div>
 
 
 </body>

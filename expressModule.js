@@ -18,7 +18,8 @@ module.exports = function(collection){
 
   app.get("/urls", (req, res) => {
     func.getURLs(collection, (urlDatabase) => {
-      res.render("urls_index", {urls: urlDatabase})
+      let hostName = req.headers.host;
+      res.render("urls_index", {urls: urlDatabase, 'hostName': hostName})
     });
   });
 
@@ -47,11 +48,16 @@ module.exports = function(collection){
     let shortURL = req.params.id;
     func.getLongURL(collection, shortURL, (err, longURL) => {
       if(longURL !== null) {
-        let templateVars = { shortURL: shortURL, longURL: longURL};
+        let hostName = req.headers.host;
+        let templateVars = {
+          shortURL: shortURL,
+          longURL: longURL,
+          "hostName": hostName
+        };
         res.render("urls_show", templateVars);
       } else {
         res.status(404);
-        res.send("SHORT URL DOES NOT EXIST");
+        res.render("urls_not_found");
       }
     });
   });
@@ -70,7 +76,8 @@ module.exports = function(collection){
 
   app.delete("/urls/:id", (req, res) => {
     let shortURL = req.params.id;
-    collection.remove({'shortURL': shortURL},() => {
+    collection.remove(
+      {'shortURL': shortURL},() => {
       res.redirect("/urls");
     });
   });
@@ -82,7 +89,7 @@ module.exports = function(collection){
         res.redirect(longURL);
       } else {
         res.status(404);
-        res.send("SHORT URL DOES NOT EXIST");
+        res.render("urls_not_found");
       }
     });
   });

@@ -1,21 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-<body>
+<body style="font-size:20px; padding:50px;">
     <header>
         <% include ./partials/_header %>
     </header>
+    <div>
+      <a href="/">New TinyURLs</a>
+    </div>
+    <br>
     <!-- Write EJS code here to display shortened li nks -->
     <% for (key in urls) { %>
-    <ul>
-      <%= key %> ->
+    <div>
+      <a href="http://<%= hostName%>/u/<%= key %>">http://<%= hostName%>/u/<%= key %></a> ->
       <a href="<%= urls[key] %>"><%= urls[key] %></a>
       <a href="/urls/<%= key %>">Edit</a>
-
       <form method="POST" action="/urls/<%= key %>?_method=DELETE">
       <button type="submit">Delete</button>
       </form>
-    </ul>
+    </div>
     <% } %>
-    <a href="/">create tinyURLs</a>
 </body>
 </html>
