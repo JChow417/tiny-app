@@ -11,6 +11,7 @@ module.exports = function(collection){
   app.use(bodyParser.urlencoded());
   app.use(methodOverride('_method'));
   app.set("view engine", "ejs");
+  app.use(express.static(__dirname + '/public'));
 
   app.get("/", (req, res) => {
     res.redirect("urls/new");
@@ -49,11 +50,7 @@ module.exports = function(collection){
     func.getLongURL(collection, shortURL, (err, longURL) => {
       if(longURL !== null) {
         let hostName = req.headers.host;
-        let templateVars = {
-          shortURL: shortURL,
-          longURL: longURL,
-          "hostName": hostName
-        };
+        let templateVars = {shortURL: shortURL, longURL: longURL, "hostName": hostName};
         res.render("urls_show", templateVars);
       } else {
         res.status(404);
@@ -61,8 +58,6 @@ module.exports = function(collection){
       }
     });
   });
-  // OTHERWISE GIVE ERROR MSG
-  // REMEMBER TO HAVE STATUS CODE eg. 4XX
 
   app.put("/urls/:id", (req, res) => {
     let shortURL = req.params.id;
@@ -93,11 +88,9 @@ module.exports = function(collection){
       }
     });
   });
-  // OTHERWISE GIVE ERROR MSG
-  // REMEMBER TO HAVE STATUS CODE eg. 4XX
 
   app.listen(PORT, () => {
-    console.log(`Example app listening on port ${PORT}!`);
+    console.log(`Tiny URL app listening on port ${PORT}!`);
   });
 };
 

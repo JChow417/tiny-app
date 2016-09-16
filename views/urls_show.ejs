@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-<body style="font-size:20px; padding:50px;">
+  <head>
+    <% include ./partials/_head %>
+  </head>
+<body>
     <!-- Write EJS code here to display shortened links -->
     <header>
         <% include ./partials/_header %>
@@ -9,20 +12,18 @@
       <a href="/">New TinyURLs</a> <a href="/urls">URLs</a>
     </div>
     <br>
-    <div>
-      <a href="http://<%= hostName%>/u/<%= shortURL %>">http://<%= hostName%>/u/<%= shortURL %></a>
+    <div class="wrapper">
+      <div>
+        <a href="http://<%= hostName%>/u/<%= shortURL %>">http://<%= hostName%>/u/<%= shortURL %></a>
+      </div>
+      <br>
+      <div>
+        <form action="/urls/<%= shortURL %>?_method=PUT" method="POST" style="margin:0px;">
+          <label for="newLongURL">Update URL:</label>
+          <input id="newLongURL" type="text" name="newLongURL" placeholder="<%= longURL %>" style="width: 300px">
+          <input type="submit" value="Update" class=button>
+        </form>
+      </div>
     </div>
-    <br>
-    <div>
-      <form action="/urls/<%= shortURL %>?_method=PUT" method="POST" style="margin:0px;">
-      <label for="newLongURL">Update URL:</label>
-      <input id="newLongURL" type="text" name="newLongURL" placeholder="<%= longURL %>" style="width: 300px">
-      <input type="submit" value="Update">
-    </form>
-
-
-    </div>
-
-
 </body>
 </html>

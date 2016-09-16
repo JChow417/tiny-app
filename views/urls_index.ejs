@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-<body style="font-size:20px; padding:50px;">
+  <head>
+    <% include ./partials/_head %>
+  </head>
+<body>
     <header>
         <% include ./partials/_header %>
     </header>
@@ -8,12 +11,12 @@
       <a href="/">New TinyURLs</a>
     </div>
     <br>
-    <!-- Write EJS code here to display shortened li nks -->
+    <!-- Write EJS code here to display shortened links -->
     <% for (key in urls) { %>
-    <div>
-      <a href="http://<%= hostName%>/u/<%= key %>">http://<%= hostName%>/u/<%= key %></a> ->
+    <div class="wrapper">
+      <a href="http://<%= hostName%>/u/<%= key %>">http://<%= hostName%>/u/<%= key %></a> ⇀
       <a href="<%= urls[key] %>"><%= urls[key] %></a>
-      <a href="/urls/<%= key %>">Edit</a>
+      <a href="/urls/<%= key %>" class = button>Edit</a>
       <form method="POST" action="/urls/<%= key %>?_method=DELETE">
       <button type="submit">Delete</button>
       </form>
