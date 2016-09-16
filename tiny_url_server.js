@@ -4,8 +4,26 @@ const express = require("express");
 const app = express();
 //var connect = require('connect');
 const methodOverride = require('method-override');
+const bodyParser = require("body-parser");
 const MongoClient = require("mongodb").MongoClient;
 const MONGODB_URI = "mongodb://127.0.0.1:27017/url_shortener";
+
+app.use(bodyParser.urlencoded());
+app.use(methodOverride('_method'));
+app.set("view engine", "ejs");
+let PORT = process.env.PORT || 8080; // default port 8080
+
+function generateRandomString() {
+  let numberOfChars = 6;
+  let alphanumericChar = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  let resultArr = [];
+  for(let i = 0; i < numberOfChars; i++) {
+    let charIndex = Math.floor(Math.random() * alphanumericChar.length);
+    let char = alphanumericChar.charAt(charIndex);
+    resultArr.push(char);
+  }
+  return resultArr.join("");
+}
 
 MongoClient.connect(MONGODB_URI, (err, dbInstance) => {
   if (err) {
@@ -15,19 +33,8 @@ MongoClient.connect(MONGODB_URI, (err, dbInstance) => {
   console.log('Connected to the database!');
   const collection = dbInstance.collection("urls")
 
-  function generateRandomString() {
-    let numberOfChars = 6;
-    let alphanumericChar = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    let resultArr = [];
-    for(let i = 0; i < numberOfChars; i++) {
-      let charIndex = Math.floor(Math.random() * alphanumericChar.length);
-      let char = alphanumericChar.charAt(charIndex);
-      resultArr.push(char);
-    }
-    return resultArr.join("");
-  }
 
-  function getLongURL(db, shortURL, cb) {
+  function getLongURL(collection, shortURL, cb) {
     let query = { "shortURL": shortURL };
     collection.findOne(query, (err, result) => {
       if (err) {
@@ -41,7 +48,7 @@ MongoClient.connect(MONGODB_URI, (err, dbInstance) => {
     });
   }
 
-  function getURLs(cb) {
+  function getURLs(collection, cb) {
     collection.find().toArray((err, urlArray) => {
       if(err){
         throw err;
@@ -54,12 +61,6 @@ MongoClient.connect(MONGODB_URI, (err, dbInstance) => {
     });
   }
 
-  const bodyParser = require("body-parser");
-  app.use(bodyParser.urlencoded());
-  app.use(methodOverride('_method'));
-
-  app.set("view engine", "ejs");
-  var PORT = process.env.PORT || 8080; // default port 8080
 
   // var urlDatabase = {
   //   "b2xVn2": "http://www.lighthouselabs.ca",
@@ -75,14 +76,14 @@ MongoClient.connect(MONGODB_URI, (err, dbInstance) => {
   });
 
   app.get("/urls", (req, res) => {
-    getURLs((urlDatabase) => {
+    getURLs(collection, (urlDatabase) => {
       res.render("urls_index", {urls: urlDatabase})
     });
   });
 
   app.post("/urls", (req, res) => {
     let longURL = req.body.longURL;  // debug statement to see POST parameters
-    getURLs((urlDatabase) => {
+    getURLs(collection, (urlDatabase) => {
       let newKey = generateRandomString();
       while (urlDatabase.hasOwnProperty(newKey)) {
          newKey = generateRandomString();
@@ -103,7 +104,7 @@ MongoClient.connect(MONGODB_URI, (err, dbInstance) => {
 
   app.get("/urls/:id", (req, res) => {
     let shortURL = req.params.id;
-    getLongURL(dbInstance, shortURL, (err, longURL) => {
+    getLongURL(collection, shortURL, (err, longURL) => {
       if(longURL !== null) {
         let templateVars = { shortURL: shortURL, longURL: longURL};
         res.render("urls_show", templateVars);
@@ -128,17 +129,15 @@ MongoClient.connect(MONGODB_URI, (err, dbInstance) => {
 
   app.delete("/urls/:id", (req, res) => {
     let shortURL = req.params.id;
-    //console.log(id);
     collection.remove({'shortURL': shortURL},() => {
       res.redirect("/urls");
     });
   });
 
-  app.get("/u/:shortURL", (req, res) => {
-    let urlKey = req.params.shortURL;
-    getURLs((urlDatabase) => {
-      if(urlDatabase.hasOwnProperty(urlKey)) {
-        let longURL = urlDatabase[urlKey];
+  app.get("/u/:id", (req, res) => {
+    let shortURL = req.params.id;
+    getLongURL(collection, shortURL, (err, longURL) => {
+      if(longURL !== null) {
         res.redirect(longURL);
       } else {
         res.status(404);
@@ -148,7 +147,6 @@ MongoClient.connect(MONGODB_URI, (err, dbInstance) => {
   });
   // OTHERWISE GIVE ERROR MSG
   // REMEMBER TO HAVE STATUS CODE eg. 4XX
-
 
   // app.get("/urls.json", (req, res) => {
   //   res.json(urlDatabase);
