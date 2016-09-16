@@ -33,6 +33,14 @@ button {
   text-decoration: none;
 }
 
+.button:link {
+  background:#808080;
+  border-radius: 5px;
+  padding:4.5px 8px;
+  color: #000000;
+  text-decoration: none;
+}
+
 nav{
   width: 100%;
   display: block;
@@ -69,6 +77,22 @@ nav{
   margin-bottom: 5px;
   margin-top: 5px;
 }
+
+.navbutton:link {
+  background:#808080;
+  border-radius: 5px;
+  padding:5px;
+  color: #2A2A2A;
+  text-decoration: none;
+  font-family: 'Open Sans',sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: -webkit-center;
+  width: 98.6%;
+  display: -webkit-inline-box;
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
 .navbutton2 {
   background:#808080;
   border-radius: 5px;
@@ -86,6 +110,22 @@ nav{
 }
 
 .navbutton2:visited {
+  background:#808080;
+  border-radius: 5px;
+  padding:5px;
+  color: #2A2A2A;
+  text-decoration: none;
+  font-family: 'Open Sans',sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: -webkit-center;
+  width: 48%;
+  display: inline-block;
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+
+.navbutton2:link {
   background:#808080;
   border-radius: 5px;
   padding:5px;
