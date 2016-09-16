@@ -8,14 +8,14 @@
       <% include ./partials/_header %>
     </header>
     <div>
-      <a href="/urls">URLs</a>
+      <nav><a href="/urls" class = navbutton>URLs</a></nav>
     </div>
     <br>
     <div class="wrapper">
       <form action="/urls" method="POST" style="margin:0px;">
         <label for="longURL">Enter a URL:</label>
         <input id="longURL" type="text" name="longURL" placeholder="http://" style="width: 300px">
-        <input type="submit" value="Submit">
+        <input type="submit" value="Submit" class=button>
       </form>
     </div>
   </body>

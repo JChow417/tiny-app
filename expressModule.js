@@ -54,7 +54,7 @@ module.exports = function(collection){
         res.render("urls_show", templateVars);
       } else {
         res.status(404);
-        res.render("urls_not_found");
+        res.render("page_not_found");
       }
     });
   });
@@ -84,9 +84,13 @@ module.exports = function(collection){
         res.redirect(longURL);
       } else {
         res.status(404);
-        res.render("urls_not_found");
+        res.render("page_not_found");
       }
     });
+  });
+
+  app.get(/.*/, (req, res) => {
+    res.render("page_not_found");
   });
 
   app.listen(PORT, () => {
