@@ -50,6 +50,8 @@ nav{
   text-align: -webkit-center;
   width: 98.6%;
   display: -webkit-inline-box;
+  margin-bottom: 5px;
+  margin-top: 5px;
 }
 
 .navbutton:visited {
@@ -64,6 +66,8 @@ nav{
   text-align: -webkit-center;
   width: 98.6%;
   display: -webkit-inline-box;
+  margin-bottom: 5px;
+  margin-top: 5px;
 }
 .navbutton2 {
   background:#808080;
@@ -77,6 +81,8 @@ nav{
   text-align: -webkit-center;
   width: 48%;
   display: inline-block;
+  margin-bottom: 5px;
+  margin-top: 5px;
 }
 
 .navbutton2:visited {
@@ -91,6 +97,8 @@ nav{
   text-align: -webkit-center;
   width: 48%;
   display: inline-block;
+  margin-bottom: 5px;
+  margin-top: 5px;
 }
 
 .wrapper {
@@ -130,4 +138,15 @@ div { color: #111;
 a:hover { color: #4169E1; }
 a:visited { color: #696969; }
 a:link { color: #5F9EA0; }
+
+@media (max-width: 690px) {
+  .navbutton2 {
+    width: 98.6%;
+  }
+
+  .navbutton2:visited {
+    width: 98.6%;
+
+  }
+}
 
