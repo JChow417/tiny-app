@@ -4,7 +4,7 @@
   "description": "",
   "main": "tiny_url_server.js",
   "scripts": {
-    "start": "tiny_url_server.js",
+    "start": "node tiny_url_server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "JChow417",
