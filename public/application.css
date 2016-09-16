@@ -19,7 +19,7 @@ button {
   background:#808080;
   border-radius: 5px;
   border:none;
-  padding:4.5px 8px;
+  padding:3.5px 8px;
   color: #000000;
   text-decoration: none;
   font: inherit;
@@ -28,7 +28,7 @@ button {
 .button:visited {
   background:#808080;
   border-radius: 5px;
-  padding:4.5px 8px;
+  padding:3.5px 8px;
   color: #000000;
   text-decoration: none;
 }
@@ -36,7 +36,7 @@ button {
 .button:link {
   background:#808080;
   border-radius: 5px;
-  padding:4.5px 8px;
+  padding:3.5px 8px;
   color: #000000;
   text-decoration: none;
 }
