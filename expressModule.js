@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 8080; // default port 8080
 
 module.exports = function(collection){
 
-  app.use(bodyParser.urlencoded());
+  app.use(bodyParser.urlencoded({ extended: true }));
   app.use(methodOverride('_method'));
   app.set("view engine", "ejs");
   app.use(express.static(__dirname + '/public'));
@@ -27,18 +27,18 @@ module.exports = function(collection){
   app.post("/urls", (req, res) => {
     let longURL = req.body.longURL;  // debug statement to see POST parameters
     func.getURLs(collection, (urlDatabase) => {
-      let newKey = func.generateRandomString();
-      while (urlDatabase.hasOwnProperty(newKey)) {
+      let newKey;
+      do {
          newKey = func.generateRandomString();
-      }
+      } while (urlDatabase.hasOwnProperty(newKey));
       let urlObject = {"shortURL": newKey, "longURL": longURL};
       collection.insert(urlObject, (err, doc) => {
-        if(err){
+        if (err) {
           throw err;
         }
         res.redirect("/urls/" + newKey);         // Respond with 'Ok' (we will replace this)
       });
-    })
+    });
   });
 
   app.get("/urls/new", (req, res) => {
@@ -81,7 +81,7 @@ module.exports = function(collection){
     let shortURL = req.params.id;
     func.getLongURL(collection, shortURL, (err, longURL) => {
       if(longURL !== null) {
-        res.redirect(longURL);
+        res.redirect(301, longURL);
       } else {
         res.status(404);
         res.render("page_not_found");
