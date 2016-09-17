@@ -29,7 +29,7 @@ nav{
   display: block;
 }
 
-.navbutton ,.navbutton:visted, .navbutton:link {
+.navbutton, .navbutton:visited, .navbutton:link {
   background:#808080;
   border-radius: 5px;
   padding:5px;
