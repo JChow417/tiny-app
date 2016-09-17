@@ -14,8 +14,7 @@ button {
   font: inherit;
 }
 
-
-.button {
+.button, .button:visited, .button:link {
   background:#808080;
   border-radius: 5px;
   border:none;
@@ -25,28 +24,12 @@ button {
   font: inherit;
 }
 
-.button:visited {
-  background:#808080;
-  border-radius: 5px;
-  padding:3.5px 8px;
-  color: #000000;
-  text-decoration: none;
-}
-
-.button:link {
-  background:#808080;
-  border-radius: 5px;
-  padding:3.5px 8px;
-  color: #000000;
-  text-decoration: none;
-}
-
 nav{
   width: 100%;
   display: block;
 }
 
-.navbutton {
+.navbutton ,.navbutton:visted, .navbutton:link {
   background:#808080;
   border-radius: 5px;
   padding:5px;
@@ -62,70 +45,7 @@ nav{
   margin-top: 5px;
 }
 
-.navbutton:visited {
-  background:#808080;
-  border-radius: 5px;
-  padding:5px;
-  color: #2A2A2A;
-  text-decoration: none;
-  font-family: 'Open Sans',sans-serif;
-  font-size: 20px;
-  font-weight: bold;
-  text-align: -webkit-center;
-  width: 98.6%;
-  display: -webkit-inline-box;
-  margin-bottom: 5px;
-  margin-top: 5px;
-}
-
-.navbutton:link {
-  background:#808080;
-  border-radius: 5px;
-  padding:5px;
-  color: #2A2A2A;
-  text-decoration: none;
-  font-family: 'Open Sans',sans-serif;
-  font-size: 20px;
-  font-weight: bold;
-  text-align: -webkit-center;
-  width: 98.6%;
-  display: -webkit-inline-box;
-  margin-bottom: 5px;
-  margin-top: 5px;
-}
-.navbutton2 {
-  background:#808080;
-  border-radius: 5px;
-  padding:5px;
-  color: #2A2A2A;
-  text-decoration: none;
-  font-family: 'Open Sans',sans-serif;
-  font-size: 20px;
-  font-weight: bold;
-  text-align: -webkit-center;
-  width: 48%;
-  display: inline-block;
-  margin-bottom: 5px;
-  margin-top: 5px;
-}
-
-.navbutton2:visited {
-  background:#808080;
-  border-radius: 5px;
-  padding:5px;
-  color: #2A2A2A;
-  text-decoration: none;
-  font-family: 'Open Sans',sans-serif;
-  font-size: 20px;
-  font-weight: bold;
-  text-align: -webkit-center;
-  width: 48%;
-  display: inline-block;
-  margin-bottom: 5px;
-  margin-top: 5px;
-}
-
-.navbutton2:link {
+.navbutton2, .navbutton2:visited, .navbutton2:link {
   background:#808080;
   border-radius: 5px;
   padding:5px;
@@ -180,13 +100,8 @@ a:visited { color: #696969; }
 a:link { color: #5F9EA0; }
 
 @media (max-width: 690px) {
-  .navbutton2 {
+  .navbutton2, .navbutton2:visited, .navbutton2:link {
     width: 98.6%;
-  }
-
-  .navbutton2:visited {
-    width: 98.6%;
-
   }
 }
 
