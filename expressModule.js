@@ -1,5 +1,6 @@
 "use strict";
 const express = require("express");
+const cookieParser = require('cookie-parser');
 const methodOverride = require('method-override');
 const bodyParser = require("body-parser");
 const func = require("./functionsModule.js");
@@ -12,6 +13,7 @@ module.exports = function(collection){
   app.use(methodOverride('_method'));
   app.set("view engine", "ejs");
   app.use(express.static(__dirname + '/public'));
+  app.use(cookieParser());
 
   app.get("/", (req, res) => {
     res.redirect("urls/new");
@@ -20,7 +22,14 @@ module.exports = function(collection){
   app.get("/urls", (req, res) => {
     func.getURLs(collection, (urlDatabase) => {
       let hostName = req.headers.host;
-      res.render("urls_index", {urls: urlDatabase, 'hostName': hostName})
+
+      let templateVars = {
+        username: req.cookies["username"],
+        urls: urlDatabase,
+        'hostName': hostName
+      };
+
+      res.render("urls_index", templateVars)
     });
   });
 
@@ -42,7 +51,11 @@ module.exports = function(collection){
   });
 
   app.get("/urls/new", (req, res) => {
-    res.render("urls_new");
+      let templateVars = {
+        username: req.cookies["username"],
+      };
+
+    res.render("urls_new", templateVars);
   });
 
   app.get("/urls/:id", (req, res) => {
@@ -50,7 +63,14 @@ module.exports = function(collection){
     func.getLongURL(collection, shortURL, (err, longURL) => {
       if(longURL !== null) {
         let hostName = req.headers.host;
-        let templateVars = {shortURL: shortURL, longURL: longURL, "hostName": hostName};
+
+        let templateVars = {
+          username: req.cookies["username"],
+          shortURL: shortURL,
+          longURL: longURL,
+          "hostName": hostName
+        };
+
         res.render("urls_show", templateVars);
       } else {
         res.status(404);
@@ -87,6 +107,17 @@ module.exports = function(collection){
         res.render("page_not_found");
       }
     });
+  });
+
+  app.post("/login", (req, res) => {
+    let username = req.body.username;
+    res.cookie('username', username)
+    res.redirect("/");
+  });
+
+  app.post("/logout", (req, res) => {
+    res.clearCookie('username');
+    res.redirect("/");
   });
 
   app.get(/.*/, (req, res) => {

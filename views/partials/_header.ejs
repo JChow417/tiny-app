@@ -1,5 +1,17 @@
 <!-- views/partials/header.ejs -->
 
 <h1>TinyURL</h1>
+  <% if (username) { %>
+  <form action="/logout" method="POST">
+    <label><%= username %></label>
+    <input type="submit" value="Logout" class=button>
+  </form>
+  <% } else { %>
+  <form action="/login" method="POST">
+    <label>Username:</label>
+    <input id="username" type="text" name="username" placeholder="">
+    <input type="submit" value="Sign In" class=button>
+  </form>
+  <% } %>
 
 
